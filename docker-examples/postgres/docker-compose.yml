@@ -1,0 +1,50 @@
+version: '3.8'
+services:
+  strapi:
+    image: strapi/strapi:3.2.5
+    secrets:
+      - database_client
+      - database_host
+      - database_name
+      - database_password
+      - database_port
+      - database_username
+    volumes:
+      - ./app:/srv/app
+    ports:
+      - '1337:1337'
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:13.0
+    environment:
+      POSTGRES_DB: /run/secrets/postgres_db
+      POSTGRES_PASSWORD: /run/secrets/postgres_password
+      POSTGRES_USER: /run/secrets/postgres_user
+    secrets:
+      - postgres_db
+      - postgres_password
+      - postgres_user
+    volumes:
+      - ./data:/var/lib/postgresql/data
+
+secrets:
+  database_client:
+    file: ./secrets/development/database_client.txt
+  database_host:
+    file: ./secrets/development/database_host.txt
+  database_name:
+    file: ./secrets/development/database_name.txt
+  database_password:
+    file: ./secrets/development/database_password.txt
+  database_port:
+    file: ./secrets/development/database_port.txt
+  database_username:
+    file: ./secrets/development/database_username.txt
+  postgres_db:
+    file: ./secrets/development/postgres_db.txt
+  postgres_password:
+    file: ./secrets/development/postgres_password.txt
+  postgres_user:
+    file: ./secrets/development/postgres_user.txt
