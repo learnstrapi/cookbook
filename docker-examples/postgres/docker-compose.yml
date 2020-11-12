@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   strapi:
-    image: strapi/strapi:3.2.5
+    image: strapi/strapi:3.3.2
     secrets:
       - database_client
       - database_host
