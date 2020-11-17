@@ -27,7 +27,7 @@ services:
       - postgres_password
       - postgres_user
     volumes:
-      - ./strapi_data:/var/lib/postgresql/data
+      - strapi_data:/var/lib/postgresql/data
 
 volumes:
   strapi_data:
