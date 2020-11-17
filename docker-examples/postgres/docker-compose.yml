@@ -1,7 +1,11 @@
 version: '3.8'
 services:
   strapi:
-    image: strapi/strapi:3.3.2
+    image: strapi/strapi:3.3.3
+    depends_on:
+      - postgres
+    ports:
+      - '1337:1337'
     secrets:
       - database_client
       - database_host
@@ -10,11 +14,7 @@ services:
       - database_port
       - database_username
     volumes:
-      - ./app:/srv/app
-    ports:
-      - '1337:1337'
-    depends_on:
-      - postgres
+      - ./packages/api:/srv/app
 
   postgres:
     image: postgres:13.0
@@ -27,7 +27,11 @@ services:
       - postgres_password
       - postgres_user
     volumes:
-      - ./data:/var/lib/postgresql/data
+      - ./strapi_data:/var/lib/postgresql/data
+
+volumes:
+  strapi_data:
+    external: true
 
 secrets:
   database_client:
